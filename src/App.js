@@ -1,72 +1,70 @@
-import React, { Component } from 'react';
-import './style.css'
+import { useEffect, useRef, useState } from 'react';
+import './style.css';
 
-class App extends Component {
+const formatTime = (totalSeconds) => {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      secondsElapsed: 0,
-      buttonText: 'INICIAR'
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+};
+
+function App() {
+  const [secondsElapsed, setSecondsElapsed] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    if (!isRunning) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      return undefined;
     }
 
-    this.timer = null
-    this.start = this.start.bind(this)
-    this.clear = this.clear.bind(this)
-  }
+    intervalRef.current = window.setInterval(() => {
+      setSecondsElapsed((previousValue) => previousValue + 1);
+    }, 1000);
 
-  getSeconds() {
-    return ('0' + this.state.secondsElapsed % 60).slice(-2)
-  }
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isRunning]);
 
-  getMinutes() {
-    return Math.floor(this.state.secondsElapsed / 60)
-  }
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
 
-  start() {
-    let state = this.state;
+  const handleStartStop = () => {
+    setIsRunning((previousValue) => !previousValue);
+  };
 
-    if (this.timer !== null) {
-      clearInterval(this.timer);
-      this.timer = null;
-      state.buttonText = 'INICIAR';
-    } else {
-      this.timer = setInterval(() => {
-        let state = this.state;
-        state.secondsElapsed += 1;
-        this.setState(state);
-      }, 1000);
-      state.buttonText = 'PAUSAR';
-    }
+  const handleReset = () => {
+    setIsRunning(false);
+    setSecondsElapsed(0);
+  };
 
-    this.setState(state);
-  }
-
-  clear() {
-    if (this.timer !== null) {
-      clearInterval(this.timer)
-      this.timer = null
-    }
-
-    let state = this.state
-    state.secondsElapsed = 0
-    state.buttonText = 'INICIAR'
-    this.setState(state)
-  }
-
-  render() {
-    return (
-      <div className="container">
-        <img src={require('./assets/cronometro.png')} className="img" />
-        <a className="timer">{this.getMinutes()}:{this.getSeconds()}</a>
-        <div className="areaBtn">
-          <a className="botao" onClick={this.start}>{this.state.buttonText}</a>
-          <a className="botao" onClick={this.clear}>ZERAR</a>
-        </div>
+  return (
+    <div className="container">
+      <img src={require('./assets/cronometro.png')} className="img" alt="Cronômetro" />
+      <span className="timer" aria-live="polite">{formatTime(secondsElapsed)}</span>
+      <div className="areaBtn">
+        <button type="button" className="botao" onClick={handleStartStop}>
+          {isRunning ? 'PAUSAR' : 'INICIAR'}
+        </button>
+        <button type="button" className="botao" onClick={handleReset}>
+          ZERAR
+        </button>
       </div>
-    )
-  }
-
+    </div>
+  );
 }
 
 export default App;

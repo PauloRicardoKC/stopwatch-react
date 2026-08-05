@@ -1,58 +1,126 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Project
+
+## Overview
+
+This project is a small React stopwatch application built with Create React App. It exposes a timer that can be started, paused, and reset while preserving the original product behavior in a modernized and secure stack.
+
+## Features
+
+- Start and pause the stopwatch
+- Reset the elapsed time to zero
+- Responsive centered layout
+- Modern React 18 application shell
+- Stable production build with optimized dependency versions
+
+## Technologies
+
+- React 18
+- React DOM 18
+- JavaScript
+- Create React App
+- Testing Library
+- ESLint via react-scripts
+
+## Requirements
+
+- Node.js 18 LTS or newer
+- npm 9 or newer
+
+## Installation
+
+```bash
+npm install
+```
+
+## Environment Variables
+
+This project does not require any environment variables for local development.
+
+## Running Locally
+
+```bash
+npm start
+```
+
+The app runs on the default CRA development server, usually at http://localhost:3000.
+
+## Running with Docker
+
+Docker is not configured in this repository at the moment.
 
 ## Available Scripts
 
-In the project directory, you can run:
+```bash
+npm start
+npm test
+npm run build
+npm run lint
+npm run eject
+```
 
-### `npm start`
+## Build
 
-Runs the app in the development mode.<br />
-Open [http://localhost:port](http://localhost:port) to view it in the browser.
+```bash
+npm run build
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The production build is generated in the `build` folder.
 
-### `npm test`
+## Tests
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+CI=true npm test -- --watchAll=false
+```
 
-### `npm run build`
+## Lint
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm run lint
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Project Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```text
+src/
+  App.js
+  App.test.js
+  index.css
+  index.js
+  setupTests.js
+  style.css
+  assets/
+public/
+  index.html
+package.json
+README.md
+```
 
-## Learn More
+## Environment Configuration
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+No custom environment file is required. The app is a simple front-end project and uses the standard CRA environment conventions.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Deployment
 
-### Code Splitting
+This project can be deployed to any static hosting solution compatible with a Create React App production build, such as Vercel, Netlify, or Nginx static hosting.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Performance
 
-### Analyzing the Bundle Size
+The app is intentionally lightweight. The stopwatch logic is kept minimal and uses a single interval per active run, which avoids unnecessary re-renders and keeps bundle size low.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## Security
 
-### Making a Progressive Web App
+The project does not currently handle credentials, API secrets, or user-generated content. The updated dependency stack removes outdated vulnerable packages from the original CRA 3 configuration and follows secure, supported React tooling.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Troubleshooting
 
-### Advanced Configuration
+- If the app does not start, reinstall dependencies with `npm install`.
+- If tests fail, run them with `CI=true npm test -- --watchAll=false`.
+- If the production build fails, ensure Node.js is on a supported LTS version.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+## Contributing
 
-### Deployment
+Contributions are welcome. Please keep changes minimal, preserve the current business behavior, and validate the build and tests before submitting a pull request.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## License
 
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+This project is distributed without an explicit license file in the repository. Please confirm the intended distribution terms with the repository owner before production use.
